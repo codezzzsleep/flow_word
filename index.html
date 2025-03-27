@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语单词复习</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 100%;
+            background: #f7f9fc;
+        }
+        body {
+            min-height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+        .unit-selector {
+            padding: 20px 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        #wordCards {
+            padding: 20px 15px;
+            min-height: 200px;
+        }
+        @media (min-width: 768px) {
+            .unit-selector, #wordCards {
+                padding: 20px;
+            }
+        }
+        #wordCardsContainer {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            margin: 20px 0;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .word-card {
+            background: white;
+            padding: 25px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .word-card::-webkit-scrollbar {
+            width: 8px;
+        }
+        .word-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .word-card::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        .word-card.active {
+            transform: translateX(0);
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+        .word-card.prev {
+            transform: translateX(-100%);
+        }
+        .word {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a365d;
+        }
+        .pronunciation {
+            color: #4a5568;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .details {
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            color: #2d3748;
+        }
+        .details.hidden {
+            visibility: hidden;
+            opacity: 0;
+        }
+        .memory-tip {
+            background: #ebf8ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2c5282;
+            border: 1px solid #bee3f8;
+        }
+        .usage {
+            color: #2c5282;
+            margin-top: 15px;
+            font-size: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #90cdf4;
+        }
+        select {
+            padding: 10px;
+            font-size: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
+            background: #f8fafc;
+            color: #2d3748;
+            transition: all 0.2s ease;
+        }
+        select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66,153,225,0.15);
+            background: white;
+        }
+        .key-word::after {
+            content: "★";
+            color: #ed8936;
+            margin-left: 8px;
+            font-size: 18px;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            h2 {
+                font-size: 20px;
+            }
+            select {
+                font-size: 16px;
+            }
+            #wordCardsContainer {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="unit-selector">
+        <div class="container">
+            <h2>选择单元</h2>
+            <select id="unitSelect" onchange="selectUnit(Number(this.value))">
+                <option value="">请选择单元...</option>
+                <option value="1">Unit 1 </option>
+                <option value="2">Unit 2 </option>
+                <option value="3">Unit 3</option>
+                <option value="4">Unit 4</option>
+                <option value="5">Unit 5</option>
+                <option value="6">Unit 6</option>
+                <option value="7">Unit 7</option>
+                <option value="8">Unit 8</option>
+                <option value="9">Unit 9</option>
+                <option value="10">Unit 10</option>
+                <option value="11">Unit 11</option>
+                <option value="12">Unit 12</option>
+                <option value="13">Unit 13</option>
+                <option value="14">Unit 14</option>
+                <option value="15">Unit 15</option>
+                <option value="16">Unit 16</option>
+                <option value="17">Unit 17</option>
+                <option value="18">Unit 18</option>
+                <option value="19">Unit 19</option>
+                <option value="20">Unit 20</option>
+                <option value="21">Unit 21</option>
+                <option value="22">Unit 22</option>
+                <option value="23">Unit 23</option>
+                <option value="24">Unit 24</option>
+                <option value="25">Unit 25</option>
+                <option value="26">Unit 26</option>
+                <option value="27">Unit 27</option>
+                <option value="28">Unit 28</option>
+                <option value="29">Unit 29</option>
+                <option value="30">Unit 30</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="wordCardsContainer">
+            <div id="wordCards"></div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
